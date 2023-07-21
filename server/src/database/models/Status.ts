@@ -3,8 +3,8 @@ import {Card} from './Card';
 
 @Entity('status')
 export class Status{
-  @PrimaryColumn('varchar', {length: 100})
-  idStatus: string
+  @PrimaryColumn('int', {generated: 'increment'})
+  idStatus: number
 
   @Column('varchar', {length: 100, nullable: false})
   status: string

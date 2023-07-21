@@ -10,7 +10,7 @@ class StatusController{
     const {status} = request.body;
     
 
-    const newStatus = await statusService.createStatus(uuid(), status);
+    const newStatus = await statusService.createStatus(status);
 
     return response.status(201).json({newStatus});
 
@@ -39,7 +39,7 @@ class StatusController{
 
     const {idStatus} = request.params;
 
-    await statusService.deleteStatus(idStatus);
+    await statusService.deleteStatus(Number(idStatus));
 
     return response.status(200).json({message: 'Status deleted.'});
   }
@@ -50,7 +50,7 @@ class StatusController{
     const {idStatus} = request.params;
     const {status} = request.body;
 
-    const newStatus = await statusService.updateStatus(idStatus, status);
+    const newStatus = await statusService.updateStatus(Number(idStatus), status);
 
     return response.status(200).json({newStatus});
   }

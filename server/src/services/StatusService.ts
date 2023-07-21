@@ -11,7 +11,7 @@ class StatusService{
     return status;
   }
 
-  async getStatus(idStatus: string){
+  async getStatus(idStatus: number){
     const status = await statusRepository.findOne({
       where: {
         idStatus
@@ -21,12 +21,12 @@ class StatusService{
     return status;
   }
 
-  async createStatus(idStatus:string ,status:string){
-    const statusName = await statusRepository.save({idStatus, status})
+  async createStatus(status:string){
+    const statusName = await statusRepository.save({status})
     return statusName;
   }
 
-  async updateStatus(idStatus: string, status: string){
+  async updateStatus(idStatus: number, status: string){
     const newStatus = await statusRepository.save({
       idStatus,
       status
@@ -35,7 +35,7 @@ class StatusService{
     return newStatus;
   }
 
-  async deleteStatus(idStatus:string){
+  async deleteStatus(idStatus:number){
     const status = await statusRepository.delete({idStatus})
     return status;
   }

@@ -8,6 +8,6 @@ export const AppDataSource = new DataSource({
     synchronize: true,
     logging: false,
     entities: ["./src/database/models/**.ts"],
-    migrations: ["./src/database/migrations"],
+    migrations: ["./src/database/migrations/**.ts"],
     subscribers: [],
 })
