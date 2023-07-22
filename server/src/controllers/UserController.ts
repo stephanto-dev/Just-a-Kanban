@@ -15,8 +15,6 @@ class UserController{
 
     const user:IUser = await userService.create({username, email, password})
 
-    console.log(user)
-
     return response.status(201).json({
       email:user.email,
       username: user.username
@@ -26,16 +24,22 @@ class UserController{
   async list(request:Request, response:Response){
     const userService = new UserService();
 
-    const users = userService.list();
+    const users = await userService.list();
 
     return response.status(200).json({users:users});
   }
 
   async delete(request:Request, response: Response){
-    const {idUser} = request.params;
-
     const userService = new UserService();
+    
+    const {idUser} = request.body;
 
+    if(!idUser){
+      const user = await userService.delete(response.locals.idUser)
+
+      return response.json({userDeleted: user});
+    }
+    
     const user = await userService.delete(idUser);
 
     return response.json({userDeleted: user});
@@ -50,11 +54,13 @@ class UserController{
   }
 
   async update(request:Request, response: Response){
-    const {idUser, username, email} = request.body;
+    const {username, email} = request.body;
 
     const userService = new UserService();
 
-    const user = await userService.update(idUser, username, email);
+    await userService.update(response.locals.idUser, username, email);
+
+    const user = await userService.show(response.locals.idUser);
 
     return response.status(200).json({user})
   }

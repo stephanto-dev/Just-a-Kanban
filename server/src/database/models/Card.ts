@@ -5,16 +5,16 @@ import { User } from './User';
 
 @Entity('cards')
 export class Card{
-  @PrimaryColumn('varchar', {length: 100})
+  @PrimaryColumn('varchar', {length: 100, generated:'uuid'})
   idCard: string
 
   @Column('varchar', {length: 100})
   text: string
 
   @ManyToOne(() => Status, (status) => status.idStatus)
-  idStatus: Status
+  status: Status
 
-  @ManyToMany(() => User)
+  @ManyToMany(() => User, {cascade:true})
   @JoinTable()
   users: User[]
 

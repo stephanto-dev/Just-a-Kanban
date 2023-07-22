@@ -10,21 +10,25 @@ import { ensureAuthenticated } from './middlewares/ensureAuthenticated';
 const router = Router();
 
 //cards
-router.get('/cards', CardController.getCards);
+router.get('/cards', ensureAuthenticated ,CardController.list);
+router.get('/card/:idCard', ensureAuthenticated, CardController.show);
+router.post('/card', ensureAuthenticated ,CardController.create);
+router.delete('/card/:idCard', ensureAuthenticated, CardController.delete);
+router.put('/card', ensureAuthenticated, CardController.update);
 
 //Status
-router.get('/status', StatusController.getAllStatus);
-router.get('/status/:idStatus', StatusController.getStatus);
-router.post('/status', StatusController.createStatus);
-router.put('/status/:idStatus', StatusController.updateStatus);
-router.delete('/status/:idStatus', StatusController.deleteStatus);
+router.get('/status', ensureAuthenticated ,StatusController.getAllStatus);
+router.get('/status/:idStatus', ensureAuthenticated ,StatusController.getStatus);
+router.post('/status', ensureAuthenticated ,StatusController.createStatus);
+router.put('/status/:idStatus', ensureAuthenticated ,StatusController.updateStatus);
+router.delete('/status/:idStatus', ensureAuthenticated ,StatusController.deleteStatus);
 
 //User
 router.post('/user', UserController.create);
-router.get('/users', UserController.list);
-router.get('/user', UserController.show);
-router.put('/user/:idUser', UserController.update);
-router.delete('/user/:idUser',UserController.update);
+// router.get('/users', ensureAuthenticated,UserController.list);
+router.get('/user', ensureAuthenticated ,UserController.show);
+router.put('/user', ensureAuthenticated ,UserController.update);
+router.delete('/user', ensureAuthenticated ,UserController.delete);
 
 //Authenticate user
 router.post('/login', AuthenticateUserController.login);

@@ -35,6 +35,7 @@ class UserService{
     return user
   }
 
+
   async list(){
     const users = await userRepository.find({
       select:{
@@ -46,10 +47,11 @@ class UserService{
       order:{
         username: 'ASC'
       }
-    })
+    });
 
     return users;
   }
+
 
   async delete(idUser: string){
     const deletedUser = await userRepository.delete({

@@ -9,6 +9,6 @@ export class Status{
   @Column('varchar', {length: 100, nullable: false})
   status: string
 
-  @OneToMany(() => Card, (card) => card.idStatus)
+  @OneToMany(() => Card, card => card.status)
   cards: Card[]
 }
