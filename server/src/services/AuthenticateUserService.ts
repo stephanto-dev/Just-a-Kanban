@@ -1,6 +1,7 @@
 import { AppDataSource } from "../database/data-source";
 import { User } from "../database/models/User";
 import { compare } from 'bcryptjs';
+import {sign} from 'jsonwebtoken';
 
 interface IUserRequest {
   email:string;
@@ -28,8 +29,13 @@ class AuthenticateUserService{
       throw new Error('Email/Password incorrect!')
     }
 
+    //Generate user token
+    const token = sign({},'just a Kanban',{
+      subject: userExists.idUser,
+      expiresIn: '30d'
+    } )
 
-
+    return {token}
   }
 }
 

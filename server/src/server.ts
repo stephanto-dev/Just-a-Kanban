@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import express, {Request, Response, NextFunction} from 'express';
+import 'express-async-errors';
 import cors from 'cors';
 import { AppDataSource } from "./database/data-source"
 
@@ -16,7 +17,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(router);
 
-// Middleware de tratamento de erros
+// Middleware for errors treatment
 app.use(
   (error: Error, request: Request, response: Response, next: NextFunction) => {
     return response.status(400).json({
