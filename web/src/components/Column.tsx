@@ -8,7 +8,6 @@ import {
   Stack,
   useColorModeValue
 } from '@chakra-ui/react';
-import { CardModel } from '../utils/models';
 import Card from './Card';
 import useColumnCards from '../hooks/useColumnCards';
 import useColumnDrop from '../hooks/useColumnDrop';

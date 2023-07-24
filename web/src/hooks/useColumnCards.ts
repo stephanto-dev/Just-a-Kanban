@@ -6,12 +6,12 @@ import useCardCollection from './useCardCollection';
 import { pickChackraRandomColor } from '../utils/helpers';
 
 
-const ColumnColorScheme: Record<ColumnType, string> ={
-  TODO:'gray',
-  'IN PROGRESS': 'blue',
-  BLOCKED: 'red',
-  COMPLETED: 'green'
-}
+// const ColumnColorScheme: Record<ColumnType, string> ={
+//   TODO:'gray',
+//   'IN PROGRESS': 'blue',
+//   BLOCKED: 'red',
+//   COMPLETED: 'green'
+// }
 
 function useColumnCards(column:ColumnType){
   const [cards, setCards] = useCardCollection();
