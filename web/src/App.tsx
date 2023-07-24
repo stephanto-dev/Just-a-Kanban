@@ -1,33 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {Container, Heading, SimpleGrid} from '@chakra-ui/react';
+import Column from './components/Column';
+import { ColumnType } from './utils/enum';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import DarkModeIconButton from './components/DarkModeIconButton';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Heading
+        fontSize={{base: '4xl', sm:'5xl', md:'6xl'}}
+        fontWeight="bold"
+        textAlign="center"
+        bgGradient="linear(to-l, #00AA11 ,#00860D)"
+        bgClip="text"
+        mt={4}
+      
+      >
+        Just a Kanban.
+      </Heading>
+      <DarkModeIconButton position="absolute" top={0} right={2} />
+      <Container w='100%' maxWidth="container.lg" px={4} py={10}>
+      <DndProvider backend={HTML5Backend }>
+        <SimpleGrid columns={{base:1, md:4}} spacing={{base:16, md:4}}>
+          <Column column={ColumnType.TO_DO}/>
+          <Column column={ColumnType.IN_PROGRESS}/>
+          <Column column={ColumnType.BLOCKED}/>
+          <Column column={ColumnType.COMPLETED}/>
+        </SimpleGrid>
+      </DndProvider> 
+      </Container>
     </>
   )
 }
