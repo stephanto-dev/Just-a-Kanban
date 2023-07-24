@@ -1,4 +1,4 @@
-import {Box, IconButton, Textarea} from '@chakra-ui/react';
+import {Box, IconButton} from '@chakra-ui/react';
 import { CardModel } from '../utils/models';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { AutoresizeTextarea } from './AutoResizeTextarea';
