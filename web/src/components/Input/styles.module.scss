@@ -1,0 +1,25 @@
+.inputWrapper{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .inputContainer{
+    width: 100%;
+    background-color: white;
+    border: 0;
+    outline: 0;
+    padding: 0.7rem 1.5rem;
+    border-radius: 1.5rem;
+
+    &::placeholder{
+      color: #BFBFBF;
+    }
+
+    p{
+      color: red;
+      margin-top: 0.75rem;
+      padding-left: 1.5rem;
+    }
+
+  }
+}

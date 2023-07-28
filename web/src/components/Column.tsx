@@ -11,6 +11,8 @@ import {
 import Card from './Card';
 import useColumnCards from '../hooks/useColumnCards';
 import useColumnDrop from '../hooks/useColumnDrop';
+import { api } from '../services/api';
+import {useEffect, useState} from 'react';
 
 const ColumnColorScheme: Record<ColumnType, string> ={
   TODO:'gray',
@@ -24,6 +26,10 @@ function Column({column}:{column: ColumnType}){
   const {cards, addEmptyCard, deleteCard, updateCard, dropCardFrom} = useColumnCards(column);
 
   const {dropRef, isOver} = useColumnDrop(column, dropCardFrom);
+
+  useEffect(() => {
+    api.get('/status').then(response => console.log(response.data))
+  })
 
   const columnCards = cards.map((card, index) => (
     <Card key={card.id} card={card} index={index} onDelete={deleteCard} onUpdate={updateCard}/>
