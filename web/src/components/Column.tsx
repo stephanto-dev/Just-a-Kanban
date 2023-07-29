@@ -27,9 +27,7 @@ function Column({column}:{column: ColumnType}){
 
   const {dropRef, isOver} = useColumnDrop(column, dropCardFrom);
 
-  useEffect(() => {
-    api.get('/status').then(response => console.log(response.data))
-  })
+
 
   const columnCards = cards.map((card, index) => (
     <Card key={card.id} card={card} index={index} onDelete={deleteCard} onUpdate={updateCard}/>

@@ -4,7 +4,8 @@ import { ColumnType } from '../utils/enum';
 import {CardModel} from '../utils/models';
 import useCardCollection from './useCardCollection';
 import { pickChackraRandomColor } from '../utils/helpers';
-
+import { api } from '../services/api';
+import {useEffect, useState} from 'react';
 
 // const ColumnColorScheme: Record<ColumnType, string> ={
 //   TODO:'gray',
@@ -15,6 +16,14 @@ import { pickChackraRandomColor } from '../utils/helpers';
 
 function useColumnCards(column:ColumnType){
   const [cards, setCards] = useCardCollection();
+
+  const {token} = JSON.parse(localStorage.getItem('tokens')!);
+
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  }
 
   const addEmptyCard = useCallback(() => {
     setCards((allCards) =>{

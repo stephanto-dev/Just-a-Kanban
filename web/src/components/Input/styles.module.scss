@@ -11,15 +11,17 @@
     padding: 0.7rem 1.5rem;
     border-radius: 1.5rem;
 
+    
     &::placeholder{
       color: #BFBFBF;
     }
-
-    p{
-      color: red;
-      margin-top: 0.75rem;
-      padding-left: 1.5rem;
-    }
-
+    
+    
+  }
+  p{
+    font: 400 0.8rem Inter;
+    color: red;
+    margin-top: 0.75rem;
+    padding-left: 1.5rem;
   }
 }

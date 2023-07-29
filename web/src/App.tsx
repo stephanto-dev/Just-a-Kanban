@@ -1,27 +1,35 @@
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
 
-import MainPage from './pages/MainPage';
+import MainPage from './pages/MainPage/MainPage';
 import LoginPage from './pages/LoginPage/LoginPage';
-import RegisterPage from './pages/RegisterPage/RegisterPage';
+import { ProtectedRoute } from './components/ProtectedRoute';
+
 
 function App() {
 
   return (
     <Router>
-      <Routes>
-        <Route
-          path='/'
-          element={
-            <LoginPage/>
-          }
-        />
-        <Route
-          path='/main'
-          element={
-            <MainPage/>
-          }
-        />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route
+            path='/'
+            element={
+              <ProtectedRoute>
+                <LoginPage/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/kanban'
+            element={
+              <ProtectedRoute authenticated>
+                <MainPage/>
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </AuthProvider>
     </Router>
   )
 }
