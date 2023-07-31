@@ -17,7 +17,7 @@ router.delete('/card/:idCard', ensureAuthenticated, CardController.delete);
 router.put('/card', ensureAuthenticated, CardController.update);
 
 //Status
-router.get('/status', ensureAuthenticated ,StatusController.getAllStatus);
+router.get('/status' ,StatusController.getAllStatus);
 router.get('/status/:idStatus', ensureAuthenticated ,StatusController.getStatus);
 router.post('/status', ensureAuthenticated ,StatusController.createStatus);
 router.put('/status/:idStatus', ensureAuthenticated ,StatusController.updateStatus);

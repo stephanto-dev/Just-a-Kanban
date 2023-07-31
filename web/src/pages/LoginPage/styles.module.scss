@@ -1,0 +1,191 @@
+.wrapper{
+  display: flex;
+
+  border-radius: 1.875rem;
+  background: #ECECEC;
+  box-shadow: 3px 4px 4px 0px rgba(0, 0, 0, 0.50);
+
+
+  justify-content: center;
+  align-items: center;
+
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 90vw;
+  max-height: 90vh;
+
+  gap: 7rem;
+
+
+  .title{
+    p:first-child{
+      color: #1C1C1C;
+      font: 600 3rem Inter;
+    }
+    p:nth-child(2){
+      color: #0A1;
+      font: 600 3rem Inter;
+    }
+
+    p:nth-child(3){
+      color: #1C1C1C;
+      font: 500 1.3rem Inter
+    }
+
+    span{
+      color: #FF3232;;
+    }
+  }
+
+  .formWrapper{
+    border-radius: 1.875rem;
+    border: 1px solid #000;
+
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+
+    min-width: 25rem;
+
+    padding: 2rem 2rem 2rem 2rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    
+    .form{
+      margin-top: 2rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+
+
+      .input{
+        margin-bottom: 1rem;
+        width: 100%;
+      }
+    }
+
+    .register{
+      margin-left: 1rem;
+      width: 100%;
+      p{
+        font: 400 0.8rem Inter;
+      }
+      button{
+        color: blue;
+        font: 400 0.8rem Inter;
+
+        &:hover{
+          color: darkblue;
+        }
+      }
+    }
+
+    .login{
+      margin-left: 1rem;
+      width: 100%;
+      p{
+        font: 400 0.8rem Inter;
+      }
+      button{
+        color: blue;
+        font: 400 0.8rem Inter;
+
+        &:hover{
+          color: darkblue;
+        }
+      }
+    }
+
+    .button{
+      margin-top: 1rem;
+
+      background-color: #25C151;
+
+      border-radius: 0.625rem;
+      border: none;
+
+      width: 50%;
+      height: 3rem;
+      
+      font: 600 1.2rem Inter;
+      color: #fff;
+
+      &:hover{
+        background-color: #1E9B3C;
+      }
+    }
+  }
+
+  
+  @media (min-width: 768px) and (max-width: 1024px) {
+    flex-direction: column;
+    gap: 0.1rem;
+
+    .title{
+
+      margin-top: 1rem;
+
+      p:first-child{
+        font: 600 2rem Inter;
+      }
+      p:nth-child(2){
+        font: 600 2rem Inter;
+      }
+  
+      p:nth-child(3){
+        font: 500 1rem Inter
+      }
+  
+      span{
+        color: #FF3232;;
+      }
+    }
+
+    .formWrapper{
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+      min-width: 20rem;
+      padding: 1rem 1rem 1rem 1rem;
+    }
+  }
+
+  @media (max-width: 768px){
+    flex-direction: column;
+    gap: 0.1rem;
+
+    .title{
+
+      margin-top: 1rem;
+
+      p:first-child{
+        font: 600 1.5rem Inter;
+      }
+      p:nth-child(2){
+        font: 600 1.5rem Inter;
+      }
+  
+      p:nth-child(3){
+        font: 500 1rem Inter
+      }
+  
+      span{
+        color: #FF3232;;
+      }
+    }
+
+    .formWrapper{
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      min-width: 20rem;
+      padding: 1rem 1rem 1rem 1rem;
+    }
+  }
+}

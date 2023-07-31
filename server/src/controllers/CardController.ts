@@ -16,9 +16,9 @@ class CardController{
   async create(request:Request, response: Response){
     const cardService = new CardService();
 
-    const {text, status} = request.body
+    const {text, status, color} = request.body
 
-    await cardService.create(text, status, response.locals.idUser);
+    await cardService.create(text, status, response.locals.idUser, color);
 
     return response.status(201).json({
       message: "Card created"

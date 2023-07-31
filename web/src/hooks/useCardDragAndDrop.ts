@@ -5,7 +5,6 @@ import { useRef } from 'react';
 
 export function useCardDragAndDrop<T extends HTMLElement>({
   card,
-  index,
 }: {
   card: CardModel;
   index: number;
@@ -18,7 +17,7 @@ export function useCardDragAndDrop<T extends HTMLElement>({
     {isDragging: boolean}
   >({
     type: ItemType.CARD,
-    item: {from: card.column, id: card.id, index},
+    item: {from: card.status, id: card.idCard,},
     collect:(monitor) => ({
       isDragging: monitor.isDragging(),
 

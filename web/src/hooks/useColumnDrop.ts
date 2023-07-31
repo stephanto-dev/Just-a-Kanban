@@ -1,10 +1,10 @@
 import {useDrop} from 'react-dnd';
-import { ColumnType, ItemType } from '../utils/enum';
+import { StatusType, ItemType } from '../utils/enum';
 import {DragItem, CardModel} from '../utils/models';
 
 function useColumnDrop(
-  column: ColumnType,
-  handleDrop: (fromColumn: ColumnType, cardId: CardModel['id']) => void,
+  column: StatusType,
+  handleDrop: (fromColumn: StatusType, cardId: CardModel['idCard']) => void,
 ){
   const [{isOver}, dropRef] = useDrop<DragItem, void, {isOver: boolean}>({
     accept: ItemType.CARD,

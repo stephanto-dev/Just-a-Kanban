@@ -1,10 +1,11 @@
 import {useCallback} from 'react';
 import {v4 as uuid} from 'uuid';
-import { ColumnType } from '../utils/enum';
+import { StatusType } from '../utils/enum';
 import {CardModel} from '../utils/models';
 import useCardCollection from './useCardCollection';
 import { pickChackraRandomColor } from '../utils/helpers';
-
+import { api } from '../services/api';
+import {useEffect, useState} from 'react';
 
 // const ColumnColorScheme: Record<ColumnType, string> ={
 //   TODO:'gray',
@@ -13,89 +14,104 @@ import { pickChackraRandomColor } from '../utils/helpers';
 //   COMPLETED: 'green'
 // }
 
-function useColumnCards(column:ColumnType){
-  const [cards, setCards] = useCardCollection();
+async function useColumnCards(status:StatusType){
+  const [cards, setCards] = await useCardCollection();
 
-  const addEmptyCard = useCallback(() => {
-    setCards((allCards) =>{
-      const columnCards = allCards[column]
+  const {token} = JSON.parse(localStorage.getItem('tokens')!);
 
-      if(columnCards.length > 100){
-        console.log('too many cards!');
-        return allCards;
-      }
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  }
 
-      const newColumnCard:CardModel = {
-        id: uuid(),
-        title: `New ${column} task`,
-        color: pickChackraRandomColor('.300'),
-        column
-      }
+  // const addEmptyCard = useCallback(() => {
+  //   setCards((allCards) =>{
+  //     const columnCards = allCards[column]
 
-      return {
-        ...allCards,
-        [column]: [newColumnCard, ...columnCards]
-      }
-    })
-  }, [column, setCards]);
+  //     if(columnCards.length > 100){
+  //       console.log('too many cards!');
+  //       return allCards;
+  //     }
 
-  const updateCard = useCallback((
-    id: CardModel['id'], updateCard: Omit<Partial<CardModel>, 'id'>
-  ) => {
+  //     const newColumnCard:CardModel = {
+  //       id: uuid(),
+  //       title: `New ${column} task`,
+  //       color: pickChackraRandomColor('.300'),
+  //       column
+  //     }
 
-    setCards((allCards) => {
-      const columnCards = allCards[column];
+  //     return {
+  //       ...allCards,
+  //       [column]: [newColumnCard, ...columnCards]
+  //     }
+  //   })
+  // }, [column, setCards]);
 
-      return {
-        ...allCards,
-        [column]: columnCards.map((card) => card.id === id ? {...card, ...updateCard} : card)
-      }
-    })
+  
 
-  }, [column, setCards])
 
-  const deleteCard = useCallback(
-    (id: CardModel['id']) => {
 
-      setCards((allCards) => {
-        const columnCards = allCards[column];
+  
 
-        return {
-          ...allCards,
-          [column]: columnCards.filter((card) => card.id !== id)
-        }
-      })
+  // const updateCard = useCallback((
+  //   id: CardModel['id'], updateCard: Omit<Partial<CardModel>, 'id'>
+  // ) => {
 
-    }, [column, setCards]
-    )
+  //   setCards((allCards) => {
+  //     const columnCards = allCards[column];
 
-  const dropCardFrom = useCallback(
-    (from: ColumnType, id:CardModel['id']) => {
-      setCards((allCards) => {
-        const fromColumnCards = allCards[from];
-        const toColumnCards = allCards[column];
-        const movingCard = fromColumnCards.find((card) => card.id === id);
+  //     return {
+  //       ...allCards,
+  //       [column]: columnCards.map((card) => card.id === id ? {...card, ...updateCard} : card)
+  //     }
+  //   })
 
-        if(!movingCard){
-          return allCards;
-        }
+  // }, [column, setCards])
 
-        return{
-          ...allCards,
-          [from]: fromColumnCards.filter((card) => card.id !== id),
-          [column]: [{...movingCard, column}, ...toColumnCards]
-        }
-      })
-    },
-    [column, setCards]
-  )
+  // const deleteCard = useCallback(
+  //   (id: CardModel['id']) => {
+
+  //     setCards((allCards) => {
+  //       const columnCards = allCards[column];
+
+  //       return {
+  //         ...allCards,
+  //         [column]: columnCards.filter((card) => card.id !== id)
+  //       }
+  //     })
+
+  //   }, [column, setCards]
+  //   )
+
+  // const dropCardFrom = useCallback(
+  //   (from: StatusType, id:CardModel['id']) => {
+  //     setCards((allCards) => {
+  //       const fromColumnCards = allCards[from];
+  //       const toColumnCards = allCards[column];
+  //       const movingCard = fromColumnCards.find((card) => card.id === id);
+
+  //       if(!movingCard){
+  //         return allCards;
+  //       }
+
+  //       return{
+  //         ...allCards,
+  //         [from]: fromColumnCards.filter((card) => card.id !== id),
+  //         [column]: [{...movingCard, column}, ...toColumnCards]
+  //       }
+  //     })
+  //   },
+  //   [column, setCards]
+  // )
 
   return{
-    cards: cards[column],
-    addEmptyCard,
-    updateCard,
-    deleteCard,
-    dropCardFrom
+    cards: cards,
+    // cards: cards[column],
+    // addEmptyCard,
+    // updateCard,
+    // deleteCard,
+    // dropCardFrom
   }
 }
 

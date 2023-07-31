@@ -1,0 +1,48 @@
+.header{
+  display: flex;
+  flex-direction: row;
+
+  position: absolute;
+  right: 0;
+
+  margin-right: 1rem;
+
+  gap: 1rem;
+
+  .logout{
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    
+    padding: 2rem;
+
+    outline: 2px solid transparent;
+    height: 2.5rem;
+    padding: 0.2rem;
+
+
+    color: #1A202C;
+    background-color: #EDF2F7;
+
+    border-radius: 0.375rem;
+
+    &:hover{
+      background-color: #e2e8f0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header{
+    flex-direction: row;
+    align-items: end;
+    gap: 0.5rem;
+    margin-right: 0;
+    margin-top: 1rem;
+
+    margin-left: 1rem;
+
+    position: relative;
+  }
+}

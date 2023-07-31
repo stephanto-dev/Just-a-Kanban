@@ -11,6 +11,9 @@ export class Card{
   @Column('varchar', {length: 100})
   text: string
 
+  @Column('varchar', {length: 100})
+  color: string
+
   @ManyToOne(() => Status, (status) => status.idStatus)
   status: Status
 

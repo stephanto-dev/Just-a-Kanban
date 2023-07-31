@@ -20,7 +20,7 @@ class CardService{
     return cards;
   }
 
-  async create(text:string, status: Status, idUser:string){
+  async create(text:string, status: Status, idUser:string, color?:string){
     const userToSave = await userRepository.findOne(
       {
         where:{idUser}
@@ -31,6 +31,7 @@ class CardService{
       const card = await cardsRepository.save({
         text,
         status,
+        color,
         users:[userToSave]
       });
 
@@ -50,7 +51,7 @@ class CardService{
     const card = await cardsRepository.save({
       idCard,
       text,
-      status
+      status,
     })
 
     return card;

@@ -2,35 +2,49 @@ import {Box, IconButton} from '@chakra-ui/react';
 import { CardModel } from '../utils/models';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { AutoresizeTextarea } from './AutoResizeTextarea';
-import { useCardDragAndDrop } from '../hooks/useCardDragAndDrop';
+import {useCallback, useState} from 'react'
 
 type CardProps = {
-  index: number;
+  index: string;
   card: CardModel;
-  onDelete: (id:CardModel['id']) => void;
-  onUpdate: (id: CardModel['id'], updateCard: CardModel) => void;
+  onDelete: (id:CardModel['idCard']) => void;
+  onUpdate: (id: CardModel['idCard'], updateCard: CardModel) => void;
 }
 
 function Card({index, card, onUpdate: handleUpdate, onDelete: handleDelete}:CardProps){
-  const {ref, isDragging} = useCardDragAndDrop<HTMLDivElement>({
-    card,
-    index,
-  });
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>{
-    const newTitle = e.target.value;
-    handleUpdate(card.id, {...card, title: newTitle})
+  const [text, setText] = useState<string>(card.text);
+
+  function debounce<T extends (...args: any[]) => void>(callback: T, delay: number) {
+    let timer: ReturnType<typeof setTimeout>;
+    return (...args: Parameters<T>) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => callback(...args), delay);
+    };
   }
+
+  const sendTextToServer = useCallback(debounce((textToSend: string) => {
+    const newCard = {
+      ...card,
+      text: textToSend
+    };
+    handleUpdate(card.idCard, newCard); // Envia o texto atualizado para o servidor
+  }, 1000), [card, handleUpdate]);
+
+  const handleTitleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newText = event.target.value;
+    setText(newText); // Atualiza o texto localmente no estado
+    sendTextToServer(newText); // Envia o texto para o servidor usando debounce após 1 segundo de inatividade
+  };
+
 
   const handleDeleteClick = () => {
-    handleDelete(card.id)
+    handleDelete(card.idCard)
   }
-
 
 
   return(
     <Box
-      ref={ref}
       as="div"
       role="group"
       position="relative"
@@ -48,7 +62,6 @@ function Card({index, card, onUpdate: handleUpdate, onDelete: handleDelete}:Card
       bgColor={card.color}
       flexGrow={0}
       flexShrink={0}
-      opacity={isDragging ? 0.5 : 1}
     >
       <IconButton 
         position="absolute"
@@ -65,10 +78,11 @@ function Card({index, card, onUpdate: handleUpdate, onDelete: handleDelete}:Card
           opacity:1
         }}
         onClick={handleDeleteClick}
+        marginLeft={2}
       />
 
       <AutoresizeTextarea
-        value={card.title}
+        value={text}
         fontWeight="semibold"
         cursor="inherit"
         border="none"
