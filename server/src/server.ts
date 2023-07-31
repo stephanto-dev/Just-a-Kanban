@@ -8,6 +8,8 @@ import {router} from './routes';
 
 const app = express();
 
+const port = process.env.PORT || 3000;
+
 const corsOptions = {
   origin: '*',
   optionsSuccessStatus: 200,
@@ -29,6 +31,6 @@ app.use(
 
 AppDataSource.initialize().then(async () => {
   console.log('Database connected')
-  app.listen(3000, () => console.log('Server is running on port 3000'));
+  app.listen(port, () => console.log('Server is running'));
 })
 
