@@ -2,7 +2,6 @@ import {Box, IconButton} from '@chakra-ui/react';
 import { CardModel } from '../utils/models';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { AutoresizeTextarea } from './AutoResizeTextarea';
-import { useCardDragAndDrop } from '../hooks/useCardDragAndDrop';
 import {useCallback, useState} from 'react'
 
 type CardProps = {
@@ -79,6 +78,7 @@ function Card({index, card, onUpdate: handleUpdate, onDelete: handleDelete}:Card
           opacity:1
         }}
         onClick={handleDeleteClick}
+        marginLeft={2}
       />
 
       <AutoresizeTextarea

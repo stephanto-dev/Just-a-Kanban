@@ -28,6 +28,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     localStorage.setItem('tokens', JSON.stringify({token}));
     setToken(token);
     navigate('/kanban');
+    navigate(0);
   }
 
   const logout = async () => {

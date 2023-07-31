@@ -1,6 +1,5 @@
 import {AddIcon} from '@chakra-ui/icons';
 import { StatusType } from '../utils/enum';
-import { StatusModel } from '../utils/models';
 import { pickChackraRandomColor } from '../utils/helpers';
 import {
   Badge,
@@ -11,11 +10,12 @@ import {
   useColorModeValue
 } from '@chakra-ui/react';
 import Card from './Card';
-import useColumnCards from '../hooks/useColumnCards';
-import useColumnDrop from '../hooks/useColumnDrop';
 import { api } from '../services/api';
 import {useEffect, useState} from 'react';
 import { CardModel } from '../utils/models';
+import { Droppable, Draggable } from "react-beautiful-dnd";
+import { useGlobalState } from '../hooks/cardsHook';
+
 
 const ColumnColorScheme: Record<StatusType, string> ={
   TODO:'gray',
@@ -38,7 +38,7 @@ const statusTextMap: {[key: string]: Status} = {
   'COMPLETED': Status.COMPLETED
 }
 
-function getStatusNumber(status: string): Status{
+export function getStatusNumber(status: string): Status{
   return statusTextMap[status] || Status.TODO;
 }
 
@@ -52,14 +52,19 @@ const config = {
 }
 
 function Column({status}: {status: string}){
-
+  
+  const [cards, setCards] = useState<CardModel[]>([]);
+  const [globalCards] = useGlobalState('cards');
 
   useEffect(() => {
     getCards();
   }, []);
 
+  useEffect(() => {
+    getCards();
+  }, [globalCards]);
 
-  const [cards, setCards] = useState<CardModel[]>([]);
+
 
   function getCards(){
     api.get('/cards', config).then(response => {
@@ -68,7 +73,7 @@ function Column({status}: {status: string}){
     })
   }
   
-
+  
   function addEmptyCard(){
     const card = {
       text: `New ${status} card`,
@@ -108,68 +113,80 @@ function Column({status}: {status: string}){
 
 
 
+  // const columnCards = cards.map((card, index) => (
+  //   <Draggable key={card.idCard} draggableId={card.idCard} index={index}>
+  //     {(provided) => (
+  //       <Box
+  //         ref={provided.innerRef}
+  //         {...provided.draggableProps}
+  //         {...provided.dragHandleProps}
+  //       >
+  //         <Card key={index} card={card} index={card.idCard} onDelete={deleteCard} onUpdate={updateCard}/>
+  //       </Box>
+  //     )}
+  //   </Draggable>
+  // ))
+
   const columnCards = cards.map((card, index) => (
-    <Card key={index} card={card} index={card.idCard} onDelete={deleteCard} onUpdate={updateCard}/>
+    <Draggable key={card.idCard} draggableId={card.idCard} index={index}>
+      {(provided) => (
+        <Box
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          <Card key={index} card={card} index={card.idCard} onDelete={deleteCard} onUpdate={updateCard}/>
+        </Box>
+      )}
+    </Draggable>
   ))
-
-
-  // const {addEmptyCard, deleteCard, updateCard, dropCardFrom} = useColumnCards(status as StatusType);
-  
-  // const {cards, deleteCard, updateCard,} = await useColumnCards(column);
-
-  // const {dropRef, isOver} = useColumnDrop(column, dropCardFrom);
-
-  // const columnCards = cards.map((card, index) => (
-  //   <Card key={card.id} card={card} index={index} onDelete={deleteCard} onUpdate={updateCard}/>
-  // ))
-
-  // const columnCards = cards.map((card, index) => (
-  //   <Card key={card.idCard} card={card} index={card.idCard}/>
-  // ))
 
   return(
     <Box>
-      <Heading fontSize="md" mb={4} letterSpacing="wide" fontWeight="semibold">
-        <Badge
-          px={2}
-          py={1}
-          rounded="lg"
-          colorScheme={ColumnColorScheme[status as StatusType]}
-        >
-          {status}
-        </Badge>
-      </Heading>
-      <IconButton
-        size="xs"
-        w="full"
-        color={useColorModeValue('gray.500','gray.400')}
-        bgColor={useColorModeValue('gray.100','gray.700')}
-        _hover={{bgColor: useColorModeValue('gray.500','gray.400'), color:'white'}}
-        py={2}
-        variant="solid"
-        colorScheme='black'
-        aria-label='add-card'
-        icon={<AddIcon/>}
-        onClick={addEmptyCard}
-      />
-
-      <Stack
-        // ref={dropRef}
-        direction={{base: 'row', md:'column'}}
-        h={{base:300, md:600}}
-        p={4}
-        mt={2}
-        spacing={4}
-        bgColor={useColorModeValue('gray.50','gray.900')}
-        rounded="lg"
-        boxShadow="md"
-        overflow='auto'
-        w='100%'
-        // opacity={isOver ? 0.85 : 1}
-        
-      >
-      {columnCards}
-      </Stack>
+        <Heading fontSize="md" mb={4} letterSpacing="wide" fontWeight="semibold">
+          <Badge
+            px={2}
+            py={1}
+            rounded="lg"
+            colorScheme={ColumnColorScheme[status as StatusType]}
+          >
+            {status}
+          </Badge>
+        </Heading>
+        <IconButton
+          size="xs"
+          w="full"
+          color={useColorModeValue('gray.500','gray.400')}
+          bgColor={useColorModeValue('gray.100','gray.700')}
+          _hover={{bgColor: useColorModeValue('gray.500','gray.400'), color:'white'}}
+          py={2}
+          variant="solid"
+          colorScheme='black'
+          aria-label='add-card'
+          icon={<AddIcon/>}
+          onClick={addEmptyCard}
+        />
+        <Droppable droppableId={status}>
+          {(provided, snapshot) => (
+            <Stack
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            direction={{base: 'row', md:'column'}}
+            h={{base:300, md:600}}
+            p={4}
+            mt={2}
+            spacing={4}
+            bgColor={useColorModeValue('gray.50','gray.900')}
+            rounded="lg"
+            boxShadow="md"
+            overflow='auto'
+            w='100%'
+            >
+              {columnCards}
+              {provided.placeholder}
+            </Stack>
+          )}
+        </Droppable>
     </Box>
   );
 }

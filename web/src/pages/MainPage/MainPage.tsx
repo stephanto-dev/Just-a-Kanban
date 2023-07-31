@@ -1,34 +1,27 @@
 import {Container, Heading, SimpleGrid} from '@chakra-ui/react';
-import Column from '../../components/Column';
-import { StatusType } from '../../utils/enum';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import DarkModeIconButton from '../../components/DarkModeIconButton';
+import Column, { getStatusNumber } from '../../components/Column';
 import { SignOut } from 'phosphor-react';
 import styles from './styles.module.scss';
 import AuthContext from '../../contexts/AuthContext';
-import { useContext, useEffect, useState } from 'react';
+import { useContext} from 'react';
 import { api } from '../../services/api';
-import { CardModel } from '../../utils/models';
+import { DragDropContext } from "react-beautiful-dnd";
+import { setGlobalState } from '../../hooks/cardsHook';
+
+
 
 export default function MainPage(){
+
   const { logout } = useContext(AuthContext);
 
-  const [cards, setCards] = useState<CardModel[]>([]);
-
+  
   const {token} = JSON.parse(localStorage.getItem('tokens')!);
-
+  
   const config = {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   }
-
-  useEffect(() => {
-    api.get('/cards', config).then(response => {
-      setCards(response.data);
-    })
-  }, [])
 
   return(
     <>
@@ -54,14 +47,32 @@ export default function MainPage(){
           Just a Kanban.
         </Heading>
       <Container w='100%' maxWidth="container.lg" px={4} py={10}>
-      <DndProvider backend={HTML5Backend }>
+      <DragDropContext onDragEnd={(result) => {
+        if(!result.destination) return;
+
+        const {destination, draggableId} = result;
+
+        const destinationColumn = getStatusNumber(destination.droppableId);
+
+        api.put(`/card`, {
+          idCard: draggableId,
+          status: destinationColumn,
+        }, config).then(response => {
+          setGlobalState('cards', response.data);
+        }
+        ).catch(error => {
+          console.log(error);
+        }
+        )
+      }
+      }>
         <SimpleGrid columns={{base:1, md:4}} spacing={{base:16, md:4}}>
-          <Column status="TODO"/>
+          <Column status="TODO" />
           <Column status="IN PROGRESS"/>
           <Column status="BLOCKED"/>
           <Column status="COMPLETED"/>
         </SimpleGrid>
-      </DndProvider> 
+      </DragDropContext>
       </Container>
     </>
   )
