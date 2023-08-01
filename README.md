@@ -1,5 +1,5 @@
 
-![Logo of the project](https://github.com/stephanto-dev/Just-a-Kanban/blob/main/web/public/kanban.svg)
+![Logo of the project](https://github.com/stephanto-dev/Just-a-Kanban/blob/main/readme/logo_just_a_kanban.png)
 
 
 ## Just a Kanban
