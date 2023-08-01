@@ -19,19 +19,22 @@ Here are the technologies used in this project.
 
 ## Services Used
 
-* Render
-* Vercel
+* Render (for backend)
+* Vercel (for frontend)
 
 ## Getting started
 
-* To create and build your database accord of the project.
+* You have to open two command prompts: one for the backend and one for the frontend
+
+* To create and build your database accord of the project, run this command on backend prompt
   - npm run typeorm -- -d ./src/database/data-source.ts migration:run
   
-* To install the gems.
-  - npm install --force
-  
-* To run the project.
-  - npm run dev
+ - On both prompts, run these commands:
+	* To install the dependencies.
+	  - npm install --force
+	  
+	* To run the project.
+	  - npm run dev
 
 ## How to use
 
