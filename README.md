@@ -69,6 +69,7 @@ The main features of the application are:
 ## Links
   - Deploy on Vercel (If the deploy is off, please run the repository locally): https://just-a-kanban.vercel.app/
   - Repository: https://github.com/stephanto-dev/Just-a-Kanban
+  - Figma: https://www.figma.com/file/KPuyONmwGDifWVnPiBNjYS/Projeto?type=design&node-id=0%3A1&mode=design&t=oNzs19m3vfHdGnFg-1
 
   ## Versioning
 
