@@ -1,6 +1,5 @@
 import { AppDataSource } from "../database/data-source";
 import { Status } from "../database/models/Status";
-import { IStatus } from "../interfaces/IStatus";
 
 const statusRepository = AppDataSource.getRepository(Status);
 

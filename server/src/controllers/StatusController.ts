@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import { StatusService } from "../services/StatusService";
-import { IStatus } from "../interfaces/IStatus";
-import {v4 as uuid} from 'uuid';
 
 class StatusController{
   async createStatus(request:Request, response: Response){

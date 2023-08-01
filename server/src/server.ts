@@ -32,5 +32,5 @@ app.use(
 AppDataSource.initialize().then(async () => {
   console.log('Database connected')
   app.listen(port, () => console.log('Server is running'));
-})
+}).catch(error => console.log(error))
 
