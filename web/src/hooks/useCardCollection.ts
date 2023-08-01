@@ -1,7 +1,4 @@
-import {v4 as uuid} from 'uuid';
-import { StatusType } from '../utils/enum';
 import {CardModel} from '../utils/models';
-import { useLocalStorage } from 'usehooks-ts';
 import { api } from '../services/api';
 import {useEffect, useState} from 'react';
 

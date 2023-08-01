@@ -40,7 +40,7 @@ export default function LoginPage(){
       if (formikRegister.isValid) {
         api
           .post('/user', values)
-          .then((response) => {
+          .then(() => {
             alert('User created successfully!');
             setSignIn(!signIn);
             formikRegister.resetForm();
