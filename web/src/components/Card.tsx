@@ -11,7 +11,7 @@ type CardProps = {
   onUpdate: (id: CardModel['idCard'], updateCard: CardModel) => void;
 }
 
-function Card({index, card, onUpdate: handleUpdate, onDelete: handleDelete}:CardProps){
+function Card({card, onUpdate: handleUpdate, onDelete: handleDelete}:CardProps){
 
   const [text, setText] = useState<string>(card.text);
 

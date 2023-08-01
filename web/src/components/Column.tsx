@@ -81,7 +81,7 @@ function Column({status}: {status: string}){
       color: pickChackraRandomColor('.300')
     }
 
-    api.post('/card', card, config).then(response => {
+    api.post('/card', card, config).then(() => {
       getCards();
     }
     ).catch(error => {
@@ -92,7 +92,7 @@ function Column({status}: {status: string}){
   }
 
   function deleteCard(id: CardModel['idCard']){
-    api.delete(`/card/${id}`, config).then(response => {
+    api.delete(`/card/${id}`, config).then(() => {
       getCards();
     }).catch(error => {
       console.log(error);
@@ -103,10 +103,10 @@ function Column({status}: {status: string}){
 
   //Update card text after user stops typing
   function updateCard(id: CardModel['idCard'], updateCard: CardModel){
-    api.put(`/card`, updateCard, config).then(response => {
+    api.put(`/card`, updateCard, config).then(() => {
       getCards();
     }).catch(error => {
-      console.log(error);
+      console.log(id);
       alert(error.response.data.message)
     })
   }
@@ -167,7 +167,7 @@ function Column({status}: {status: string}){
           onClick={addEmptyCard}
         />
         <Droppable droppableId={status}>
-          {(provided, snapshot) => (
+          {(provided) => (
             <Stack
             ref={provided.innerRef}
             {...provided.droppableProps}
