@@ -67,7 +67,7 @@ The main features of the application are:
 
 
 ## Links
-  - Deploy on Vercel (If the deploy is off, please run the repository locally): https://just-a-kanban.vercel.app/
+  - Deploy on Vercel (If when you try to use the site for the first time it takes a long time to respond or is very slow, it is because of the hosting. The server is turned off when it is inactive, so when you make the first request it will turn on): https://just-a-kanban.vercel.app/
   - Repository: https://github.com/stephanto-dev/Just-a-Kanban
   - Figma: https://www.figma.com/file/KPuyONmwGDifWVnPiBNjYS/Projeto?type=design&node-id=0%3A1&mode=design&t=oNzs19m3vfHdGnFg-1
 
