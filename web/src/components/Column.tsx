@@ -43,7 +43,7 @@ export function getStatusNumber(status: string): Status{
 }
 
 
-const {token} = JSON.parse(localStorage.getItem('tokens')!);
+const {token} = JSON.parse(localStorage.getItem('tokens')!) || {};
 
 const config = {
   headers: {
