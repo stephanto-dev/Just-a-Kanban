@@ -1,14 +1,15 @@
 import { Input } from '../../components/Input/Input';
 import styles from './styles.module.scss';
 import { Kanban } from 'phosphor-react';
-import {useContext, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {useTypewriter} from 'react-simple-typewriter';
-
 import { api } from '../../services/api';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import AuthContext from '../../contexts/AuthContext';
 import Modal from '../../components/Modal/Modal';
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const registerValidationSchema = Yup.object().shape({
   email: Yup.string().email().required(),
@@ -31,6 +32,18 @@ export default function LoginPage(){
     loop: 400,
   });
   const [modal, setModal] = useState(true);
+
+  useEffect(() => {
+    api
+    .get('/')
+    .then(() => {
+      toast.success('Server is connected!', {autoClose: false});
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+
+  },[api]);
 
   const formikRegister = useFormik({
     initialValues: {
@@ -80,6 +93,7 @@ export default function LoginPage(){
 
   return(
     <>
+    <ToastContainer/>
     <div className={styles.wrapper}>
       {modal && <Modal setModal={setModal}/>}
       <div className={styles.title}>
