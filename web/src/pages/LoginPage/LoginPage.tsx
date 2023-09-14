@@ -8,6 +8,7 @@ import { api } from '../../services/api';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import AuthContext from '../../contexts/AuthContext';
+import Modal from '../../components/Modal/Modal';
 
 const registerValidationSchema = Yup.object().shape({
   email: Yup.string().email().required(),
@@ -29,6 +30,7 @@ export default function LoginPage(){
     words: ['yourself', 'your projects', 'your life'],
     loop: 400,
   });
+  const [modal, setModal] = useState(true);
 
   const formikRegister = useFormik({
     initialValues: {
@@ -77,8 +79,9 @@ export default function LoginPage(){
   });
 
   return(
+    <>
     <div className={styles.wrapper}>
-      
+      {modal && <Modal setModal={setModal}/>}
       <div className={styles.title}>
         <p>WELCOME TO</p>
         <p>JUST A KANBAN</p>
@@ -188,5 +191,6 @@ export default function LoginPage(){
       </div>
 
     </div>
+    </>
   )
 }
