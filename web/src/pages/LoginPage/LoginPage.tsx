@@ -56,12 +56,12 @@ export default function LoginPage(){
         api
           .post('/user', values)
           .then(() => {
-            alert('User created successfully!');
+            toast.success('User created successfully!');
             setSignIn(!signIn);
             formikRegister.resetForm();
           })
           .catch((error) => {
-            alert(error.response.data.message);
+            toast.error(error.response.data.message);
           });
       }
     },
@@ -83,7 +83,7 @@ export default function LoginPage(){
             formikLogin.resetForm();
           })
           .catch((error) => {
-            alert(error.response.data.message);
+            toast.error(error.response.data.message);
           });
       }
 
