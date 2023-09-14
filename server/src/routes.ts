@@ -33,4 +33,10 @@ router.delete('/user', ensureAuthenticated ,UserController.delete);
 //Authenticate user
 router.post('/login', AuthenticateUserController.login);
 
+//Start server
+router.get('/', (request, response) => {
+    return response.json({message: 'server is running'});
+    }
+);
+
 export {router}
