@@ -73,10 +73,11 @@ The main features of the application are:
 
   ## Versioning
 
-  1.0.0.0
+  1.0.1
 
   ## Future implementations
 
+  * Add a toast notification when sever connects :white_check_mark:
   * Change the server communication to socket
   * Implement a card editor
   * Implement shared kanban with other users
